@@ -7,24 +7,24 @@ import {
 } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { User } from 'firebase';
+import { SessionService } from './session.service';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  userData: any;
+  userData?: any;
+
   constructor(
     public afAuth: AngularFireAuth, // Inject Firebase auth service,
-    public router: Router
+    public router: Router,
+    public sessionService: SessionService
   ) {
     this.afAuth.authState.subscribe((user) => {
-      console.log(this.userData);
       if (user) {
+        this.sessionService.setInfo(JSON.stringify(user?.uid));
         this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem('user')!);
-      } else {
-        localStorage.setItem('user', 'null');
-        JSON.parse(localStorage.getItem('user')!);
+        router.navigate(['memos']);
       }
     });
   }
@@ -32,6 +32,7 @@ export class AuthService {
   GoogleAuth() {
     return this.AuthLogin(new GoogleAuthProvider());
   }
+  // Sign in with facebook
   facebookAuth() {
     return this.AuthLogin(new FacebookAuthProvider());
   }
@@ -40,7 +41,8 @@ export class AuthService {
     return this.afAuth
       .signInWithPopup(provider)
       .then((result) => {
-        localStorage.setItem('user', JSON.stringify(result.user));
+        this.sessionService.setInfo(JSON.stringify(result.user?.uid));
+        this.userData = result.user;
         this.router.navigate(['memos']);
       })
       .catch((error) => {
@@ -50,7 +52,7 @@ export class AuthService {
   }
   logout() {
     return this.afAuth.signOut().then(() => {
-      localStorage.setItem('user', 'null');
+      this.sessionService.logOut();
       this.router.navigate(['login']);
     });
     console.log('logout');

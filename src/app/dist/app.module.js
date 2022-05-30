@@ -17,9 +17,8 @@ var login_component_1 = require("./pages/Login-page/login/login.component");
 var environment_1 = require("../environments/environment");
 var compat_1 = require("@angular/fire/compat");
 var auth_1 = require("@angular/fire/compat/auth");
-// import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-// import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-// import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+var storage_1 = require("@angular/fire/compat/storage");
+var database_1 = require("@angular/fire/compat/database");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -32,6 +31,9 @@ var AppModule = /** @class */ (function () {
                 layout_module_1.LayoutModule,
                 compat_1.AngularFireModule.initializeApp(environment_1.environment.firebaseConfig),
                 auth_1.AngularFireAuthModule,
+                storage_1.AngularFireStorageModule,
+                storage_1.AngularFireStorageModule,
+                database_1.AngularFireDatabaseModule,
             ],
             providers: [],
             bootstrap: [app_component_1.AppComponent]

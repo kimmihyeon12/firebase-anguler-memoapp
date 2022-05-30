@@ -8,11 +8,9 @@ import { LoginComponent } from './pages/Login-page/login/login.component';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-
-// import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-// import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-// import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
-
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 @NgModule({
   declarations: [AppComponent, MemosComponent, LoginComponent],
   imports: [
@@ -21,9 +19,9 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
     LayoutModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    // AngularFirestoreModule,
-    // AngularFireStorageModule,
-    // AngularFireDatabaseModule,
+    AngularFireStorageModule,
+    AngularFireStorageModule,
+    AngularFireDatabaseModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

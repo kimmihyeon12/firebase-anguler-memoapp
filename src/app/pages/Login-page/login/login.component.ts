@@ -13,6 +13,5 @@ import { AuthService } from 'src/app/service/auth.service';
 })
 export class LoginComponent implements OnInit {
   constructor(public authService: AuthService) {}
-
   ngOnInit(): void {}
 }

@@ -11,20 +11,16 @@ var core_1 = require("@angular/core");
 var auth_1 = require("@angular/fire/auth");
 var AuthService = /** @class */ (function () {
     function AuthService(afAuth, // Inject Firebase auth service,
-    router) {
+    router, sessionService) {
         var _this = this;
         this.afAuth = afAuth;
         this.router = router;
+        this.sessionService = sessionService;
         this.afAuth.authState.subscribe(function (user) {
-            console.log(_this.userData);
             if (user) {
+                _this.sessionService.setInfo(JSON.stringify(user === null || user === void 0 ? void 0 : user.uid));
                 _this.userData = user;
-                localStorage.setItem('user', JSON.stringify(_this.userData));
-                JSON.parse(localStorage.getItem('user'));
-            }
-            else {
-                localStorage.setItem('user', 'null');
-                JSON.parse(localStorage.getItem('user'));
+                router.navigate(['memos']);
             }
         });
     }
@@ -32,6 +28,7 @@ var AuthService = /** @class */ (function () {
     AuthService.prototype.GoogleAuth = function () {
         return this.AuthLogin(new auth_1.GoogleAuthProvider());
     };
+    // Sign in with facebook
     AuthService.prototype.facebookAuth = function () {
         return this.AuthLogin(new auth_1.FacebookAuthProvider());
     };
@@ -41,7 +38,9 @@ var AuthService = /** @class */ (function () {
         return this.afAuth
             .signInWithPopup(provider)
             .then(function (result) {
-            localStorage.setItem('user', JSON.stringify(result.user));
+            var _a;
+            _this.sessionService.setInfo(JSON.stringify((_a = result.user) === null || _a === void 0 ? void 0 : _a.uid));
+            _this.userData = result.user;
             _this.router.navigate(['memos']);
         })["catch"](function (error) {
             console.log('error');
@@ -51,7 +50,7 @@ var AuthService = /** @class */ (function () {
     AuthService.prototype.logout = function () {
         var _this = this;
         return this.afAuth.signOut().then(function () {
-            localStorage.setItem('user', 'null');
+            _this.sessionService.logOut();
             _this.router.navigate(['login']);
         });
         console.log('logout');
