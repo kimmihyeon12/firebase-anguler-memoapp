@@ -16,10 +16,35 @@ var MemosService = /** @class */ (function () {
     MemosService.prototype.log = function (message) {
         this.messageService.add("HeroService: " + message);
     };
-    MemosService.prototype.getMemos = function () { };
-    MemosService.prototype.getMemo = function () { };
-    MemosService.prototype.addMemo = function () { };
-    MemosService.prototype.updateMemo = function () { };
+    MemosService.prototype.getMemos = function () {
+        return this.db.collection('memo').get();
+    };
+    MemosService.prototype.getMemo = function (id) {
+        return this.db.collection('memo').doc(id).get();
+    };
+    MemosService.prototype.addMemo = function (memoForm) {
+        var _this = this;
+        new Promise(function (resolve, reject) {
+            _this.db
+                .collection('memo')
+                .add(memoForm)
+                .then(function (response) {
+                console.log(response);
+            }, function (error) { return reject(error); });
+        });
+    };
+    MemosService.prototype.updateMemo = function (memoForm) {
+        var _this = this;
+        new Promise(function (resolve, reject) {
+            _this.db
+                .collection('memo')
+                .doc(memoForm.id)
+                .update(memoForm)
+                .then(function (response) {
+                console.log(response);
+            }, function (error) { return reject(error); });
+        });
+    };
     MemosService.prototype.deleteMemo = function () { };
     MemosService = __decorate([
         core_1.Injectable({

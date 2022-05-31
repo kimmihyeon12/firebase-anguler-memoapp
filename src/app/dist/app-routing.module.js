@@ -10,7 +10,9 @@ exports.AppRoutingModule = void 0;
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var auth_guard_1 = require("./auth.guard");
+var page_not_found_component_1 = require("./pages/errr-page/page-not-found/page-not-found.component");
 var login_component_1 = require("./pages/Login-page/login/login.component");
+var memos_detail_component_1 = require("./pages/memos-detail-page/memos-detail/memos-detail.component");
 var memos_component_1 = require("./pages/memos-page/memos/memos.component");
 var routes = [
     { path: '', component: login_component_1.LoginComponent },
@@ -24,6 +26,9 @@ var routes = [
             { path: '', redirectTo: '/memos', pathMatch: 'full' },
             { path: 'login', component: login_component_1.LoginComponent },
             { path: 'memos', component: memos_component_1.MemosComponent },
+            { path: 'memos-detail/:id', component: memos_detail_component_1.MemosDetailComponent },
+            { path: 'memos-detail', component: memos_detail_component_1.MemosDetailComponent },
+            { path: '**', component: page_not_found_component_1.PageNotFoundComponent },
         ]
     },
 ];

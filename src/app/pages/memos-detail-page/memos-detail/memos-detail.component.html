@@ -1,0 +1,36 @@
+
+<div class="flex flex-col w-full h-[80vh] borderr justify-center items-center">
+  
+  <div *ngIf="memo" class="border w-80 h-[70vh] rounded-xl">
+    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label>title</label>
+        <input
+          type="title"
+          formControlName="title"
+          class="border "
+          required
+            [(ngModel)]="memo.title"
+        />
+      </div>
+      <div>
+        <label>content</label>
+        <input
+          type="content"
+          formControlName="content"
+          class="border "
+          required
+          [(ngModel)]="memo.content"
+        />
+      </div>
+
+      <button
+      type="submit"
+      class="btn btn-success"
+    >
+  
+      {{memo.id != null ? "UPDATE MEMO" : "ADD MEMO"}}
+    </button>
+    </form>
+  </div>  
+</div>

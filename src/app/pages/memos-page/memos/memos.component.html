@@ -2,7 +2,15 @@
   <div class="flex justify-end w-full h-10 mr-6 ">
     <button class="p-2 rounded-lg bg-slate-300" (click)="authService.logout()">로그아웃</button>
   </div>
-  <div class="border w-80 h-[70vh] rounded-xl">
 
+  <div class="border w-80 h-[70vh] rounded-xl">
+    <div class="w-full flex justify-center mt-5 font-bold">할일목록</div>
+    <ul class=" pl-5">
+      <li *ngFor='let memo of memos' class="p-1">
+        <a routerLink="/memos-detail/{{memo.id}}">
+          {{memo.title}}
+        </a>
+      </li>
+    </ul>
   </div>  
 </div>
